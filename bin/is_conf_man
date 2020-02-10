@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+
+import is_conf_man
+import argparse
+
+arg_parser = argparse.ArgumentParser(description='Short sample app', add_help=True)
+
+arg_parser.add_argument('-v', '--verbose',
+                        action="store_true",
+                        default=False,
+                        help='Logs to STDOUT verbosely.')
+
+arg_parser.add_argument('-V', '--version',
+                        action='version',
+                        version='%(prog)s 1.0')
+
+arg_parser.add_argument('-f', '--file',
+                        type=open,
+                        default=None,
+                        help='Import a config file to edit')
+
+args = arg_parser.parse_args()
+print(args)
+
+if args.verbose:
+    print('yep')
+
+if args.file:
+    global conf_file
+    inc_filename = args.file.name
+    print(f'Received file argument: "{inc_filename}"')
+    conf_file = args.file.name
+else:
+    conf_file = None
+
+app = is_conf_man
+app.run(conf_file)
